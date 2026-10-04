@@ -4,11 +4,11 @@
 
 <form class="row g-2 mb-4" method="GET" action="/planes">
   <div class="col-md-4">
-    <input class="form-control" name="q" value="<%= query.q %>" placeholder="ค้นหาชื่อรุ่น เช่น 737">
+    <input class="form-control" name="q" value="<%= query.q %>" placeholder="Find aircraft for example : Boeing 737">
   </div>
   <div class="col-md-3">
     <select class="form-select" name="manufacturer">
-      <option value="">— ผู้ผลิตทั้งหมด —</option>
+      <option value="">— All manufacturers —</option>
       <% ['Boeing','Airbus','Cessna','Embraer','Bombardier','Gulfstream','ATR','Lockheed Martin','SAAB','Kramenka Industries','Other'].forEach(m => { %>
         <option value="<%= m %>" <%= query.manufacturer === m ? 'selected' : '' %>><%= m %></option>
       <% }) %>
@@ -16,9 +16,9 @@
   </div>
   <div class="col-md-3">
     <select class="form-select" name="sort">
-      <option value="-createdAt" <%= query.sort === '-createdAt' ? 'selected' : '' %>>ใหม่ล่าสุด</option>
-      <option value="price"      <%= query.sort === 'price' ? 'selected' : '' %>>ราคาต่ำ → สูง</option>
-      <option value="-price"     <%= query.sort === '-price' ? 'selected' : '' %>>ราคาสูง → ต่ำ</option>
+      <option value="-createdAt" <%= query.sort === '-createdAt' ? 'selected' : '' %>>Newest</option>
+      <option value="price"      <%= query.sort === 'price' ? 'selected' : '' %>>Price: Low to High</option>
+      <option value="-price"     <%= query.sort === '-price' ? 'selected' : '' %>>Price: High to Low</option>
     </select>
   </div>
   <div class="col-md-2 d-grid"><button class="btn btn-dark">Search</button></div>
