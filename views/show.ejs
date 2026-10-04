@@ -1,0 +1,84 @@
+<div class="row g-4">
+  <div class="col-lg-5">
+    <div class="card shadow-sm border-0 overflow-hidden">
+      <img
+        src="<%= plane.imageUrl || 'https://placehold.co/900x600?text=Aircraft' %>"
+        alt="<%= plane.name %>"
+        class="img-fluid"
+        style="height: 420px; object-fit: cover;"
+      >
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/planes">Plane Store</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= plane.name %></li>
+      </ol>
+    </nav>
+
+    <h1 class="display-6 fw-bold mb-3"><%= plane.name %></h1>
+
+    <div class="mb-3">
+      <span class="badge bg-primary me-2"><%= plane.manufacturer %></span>
+      <span class="badge bg-secondary me-2"><%= plane.category %></span>
+      <span class="badge bg-success"><%= plane.condition %></span>
+    </div>
+
+    <p class="fs-3 fw-bold text-success mb-4"><%= plane.priceFormatted %></p>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <div class="border rounded p-3 bg-white h-100">
+          <div class="text-muted small">Year</div>
+          <div class="fw-semibold"><%= plane.year %></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="border rounded p-3 bg-white h-100">
+          <div class="text-muted small">Seats</div>
+          <div class="fw-semibold"><%= plane.seats %></div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="border rounded p-3 bg-white h-100">
+          <div class="text-muted small">Range</div>
+          <div class="fw-semibold"><%= plane.rangeKm %> km</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-body">
+        <h5 class="card-title mb-3">Aircraft Details</h5>
+        <dl class="row mb-0">
+          <dt class="col-sm-4">Manufacturer</dt>
+          <dd class="col-sm-8"><%= plane.manufacturer %></dd>
+
+          <dt class="col-sm-4">Category</dt>
+          <dd class="col-sm-8"><%= plane.category %></dd>
+
+          <dt class="col-sm-4">Condition</dt>
+          <dd class="col-sm-8"><%= plane.condition %></dd>
+
+          <dt class="col-sm-4">Stock</dt>
+          <dd class="col-sm-8"><%= plane.stock %> available</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h5>Description</h5>
+      <p class="text-muted mb-0"><%= plane.description || 'No description available for this aircraft.' %></p>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+      <a href="/planes/<%= plane._id %>/edit" class="btn btn-warning">Edit</a>
+      <form method="POST" action="/planes/<%= plane._id %>?_method=DELETE" class="d-inline" onsubmit="return confirm('Delete <%= plane.name %>?')">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+      <a href="/planes" class="btn btn-outline-secondary">Back to List</a>
+    </div>
+  </div>
+</div>

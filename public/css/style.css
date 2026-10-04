@@ -1,0 +1,26 @@
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.card {
+  border-radius: 18px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.form-control,
+.form-select,
+textarea {
+  border-radius: 12px;
+}
+
+.btn {
+  border-radius: 12px;
+}

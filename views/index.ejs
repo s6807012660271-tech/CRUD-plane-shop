@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Aircraft Catalog <span class="badge bg-secondary"><%= total %></span></h1>
+</div>
+
+<form class="row g-2 mb-4" method="GET" action="/planes">
+  <div class="col-md-4">
+    <input class="form-control" name="q" value="<%= query.q %>" placeholder="ค้นหาชื่อรุ่น เช่น 737">
+  </div>
+  <div class="col-md-3">
+    <select class="form-select" name="manufacturer">
+      <option value="">— ผู้ผลิตทั้งหมด —</option>
+      <% ['Boeing','Airbus','Cessna','Embraer','Bombardier','Gulfstream','ATR','Lockheed Martin','SAAB','Kramenka Industries','Other'].forEach(m => { %>
+        <option value="<%= m %>" <%= query.manufacturer === m ? 'selected' : '' %>><%= m %></option>
+      <% }) %>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select class="form-select" name="sort">
+      <option value="-createdAt" <%= query.sort === '-createdAt' ? 'selected' : '' %>>ใหม่ล่าสุด</option>
+      <option value="price"      <%= query.sort === 'price' ? 'selected' : '' %>>ราคาต่ำ → สูง</option>
+      <option value="-price"     <%= query.sort === '-price' ? 'selected' : '' %>>ราคาสูง → ต่ำ</option>
+    </select>
+  </div>
+  <div class="col-md-2 d-grid"><button class="btn btn-dark">Search</button></div>
+</form>
+
+<% if (planes.length === 0) { %>
+  <div class="alert alert-warning">ยังไม่มีข้อมูลเครื่องบิน — <a href="/planes/new">เพิ่มลำแรก</a></div>
+<% } %>
+
+<div class="row g-3">
+  <% planes.forEach(p => { %>
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <img src="<%= p.imageUrl || 'https://placehold.co/600x400?text=Aircraft' %>" class="card-img-top" style="height:180px;object-fit:cover">
+        <div class="card-body">
+          <h5 class="card-title mb-1"><%= p.name %></h5>
+          <p class="text-muted small mb-2"><%= p.manufacturer %> · <%= p.category %> · <%= p.year %></p>
+          <p class="fw-bold text-success mb-1"><%= p.priceFormatted %></p>
+          <span class="badge <%= p.inStock ? 'bg-success' : 'bg-danger' %>">
+            <%= p.inStock ? 'In stock: ' + p.stock : 'Sold out' %>
+          </span>
+        </div>
+        <div class="card-footer bg-white d-flex gap-2">
+          <a href="/planes/<%= p._id %>" class="btn btn-sm btn-outline-primary">View</a>
+          <a href="/planes/<%= p._id %>/edit" class="btn btn-sm btn-outline-warning">Edit</a>
+          <form method="POST" action="/planes/<%= p._id %>?_method=DELETE" onsubmit="return confirm('ลบ <%= p.name %> ?')">
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+</div>
+
+<% if (totalPages > 1) { %>
+  <nav class="mt-4"><ul class="pagination justify-content-center">
+    <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+        <a class="page-link" href="/planes?page=<%= i %>&q=<%= query.q %>&manufacturer=<%= query.manufacturer %>&sort=<%= query.sort %>"><%= i %></a>
+      </li>
+    <% } %>
+  </ul></nav>
+<% } %>
